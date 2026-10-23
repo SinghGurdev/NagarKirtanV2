@@ -12,6 +12,9 @@
     "heroImage": "/images/2026/sangat.jpg",
     "invitationPa": "ਆਓ ਗੁਰੂ ਸਾਹਿਬ ਜੀ ਦੇ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ ਨੂੰ ਸਮਰਪਿਤ ਮਹਾਨ ਨਗਰ ਕੀਰਤਨ ਵਿੱਚ ਵੱਧ ਚੜ੍ਹ ਕੇ ਹਾਜ਼ਰੀਆਂ ਭਰੀਏ ਜੀ।"
   },
+  "features": {
+    "grounds": false
+  },
   "venues": {
     "gurdwara": {
       "name": "Gurdwara Gur Nanak Parkash",

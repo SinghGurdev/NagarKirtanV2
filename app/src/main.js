@@ -17,13 +17,24 @@ const tabbar = document.getElementById("tabbar");
 let content = null;
 let cleanup = null; // set by a tab's mount() (e.g. to remove its map)
 
-tabbar.innerHTML = tabs
-  .map((t) => `<a class="tab" href="#/${t.id}" data-tab="${t.id}">${icons[t.id]()}${t.label}</a>`)
-  .join("");
+// Tabs that can be switched off in content.json ("features"). Hidden until
+// the content says otherwise, so they never flash in the tab bar.
+const optional = { grounds: (c) => c?.features?.grounds === true };
+const visible = () => tabs.filter((t) => !optional[t.id] || optional[t.id](content));
+
+function renderTabbar() {
+  const list = visible();
+  tabbar.style.gridTemplateColumns = `repeat(${list.length}, minmax(0, 1fr))`;
+  tabbar.innerHTML = list
+    .map((t) => `<a class="tab" href="#/${t.id}" data-tab="${t.id}">${icons[t.id]()}${t.label}</a>`)
+    .join("");
+}
+renderTabbar();
 
 function currentTab() {
   const id = location.hash.replace(/^#\/?/, "");
-  return byId[id] ?? home;
+  const tab = byId[id];
+  return tab && visible().includes(tab) ? tab : home;
 }
 
 function show() {
@@ -48,6 +59,7 @@ show();
 loadContent()
   .then((c) => {
     content = c;
+    renderTabbar();
     show();
   })
   .catch(() => {

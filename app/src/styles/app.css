@@ -123,6 +123,11 @@ h3 {
   gap: 10px;
   margin-top: 12px;
 }
+/* An odd last shortcut spans the full width. */
+.quick-link:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  min-height: 72px;
+}
 .quick-link {
   box-shadow: var(--shadow-card);
   display: flex;
