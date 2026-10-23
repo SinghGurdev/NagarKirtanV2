@@ -75,7 +75,12 @@
     "name": null,
     "lat": 36.64583,
     "lng": -119.7086,
-    "details": null
+    "details": null,
+    "shuttle": {
+      "title": "Trolley to the Gurdwara",
+      "text": "Trolleys run back and forth between the parking lot and the Gurdwara for anyone who can't or doesn't want to walk.",
+      "hours": null
+    }
   },
   "grounds": {
     "amenities": [

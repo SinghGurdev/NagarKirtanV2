@@ -112,7 +112,7 @@ export const home = {
       <div class="quick-grid">
         <a class="quick-link" href="#/parade">${icons.parade(24)}Nagar Kirtan<span>Where it is now</span></a>
         <a class="quick-link" href="#/schedule">${icons.schedule(24)}Schedule<span>Sunday's times</span></a>
-        <a class="quick-link" href="#/parking">${icons.parking(24)}Parking<span>Directions to the lot</span></a>
+        <a class="quick-link" href="#/parking">${icons.parking(24)}Parking<span>Directions and trolley</span></a>
         <a class="quick-link" href="#/grounds">${icons.grounds(24)}Grounds<span>Food, restrooms, first aid</span></a>
       </div>
 

@@ -1,7 +1,24 @@
 import { esc, directionsUrl } from "../data.js";
 import { createMap, pin } from "../map.js";
 
-// Parking: map with the lot and the Gurdwara, then details and directions.
+// Parking: map with the lot and the Gurdwara, then the trolley note,
+// details and directions.
+
+const trolleyIcon =
+  '<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="14" rx="3"/><path d="M4 10h16M9 3v7M15 3v7"/><circle cx="8" cy="20" r="1.6"/><circle cx="16" cy="20" r="1.6"/><path d="M8 17v1.4M16 17v1.4"/></svg>';
+
+function shuttle(s) {
+  if (!s) return "";
+  return `
+    <div class="shuttle">
+      <span class="shuttle-icon">${trolleyIcon}</span>
+      <div>
+        <div class="shuttle-title">${esc(s.title)}</div>
+        <div class="shuttle-text">${esc(s.text)}</div>
+        ${s.hours ? `<div class="shuttle-hours">${esc(s.hours)}</div>` : ""}
+      </div>
+    </div>`;
+}
 export const parking = {
   id: "parking",
   label: "Parking",
@@ -21,6 +38,7 @@ export const parking = {
       <section class="card sheet">
         <h2>${esc(p.name || "Nagar Kirtan parking")}</h2>
         <p>Parking for ${esc(g.name)}</p>
+        ${shuttle(p.shuttle)}
         <div class="details${p.details ? "" : " details--empty"}">${
           p.details ? esc(p.details) : "Parking details coming soon."
         }</div>
@@ -43,7 +61,7 @@ export const parking = {
     const points = [[p.lng, p.lat]];
     if (g.lat && g.lng) points.push([g.lng, g.lat]);
 
-    createMap(el, { fit: points, padding: { top: 150, bottom: 70, left: 70, right: 70 } })
+    createMap(el, { fit: points, padding: { top: 130, bottom: 60, left: 70, right: 70 } })
       .then((h) => {
         if (!h || gone) return h?.destroy();
         handle = h;
