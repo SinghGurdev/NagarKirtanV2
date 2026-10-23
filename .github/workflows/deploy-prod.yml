@@ -20,9 +20,9 @@ jobs:
     runs-on: ubuntu-latest
     environment: Production
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 22
           cache: npm
@@ -32,9 +32,22 @@ jobs:
       - name: Build app
         run: npm run build
 
-      - uses: aws-actions/configure-aws-credentials@v4
+      # AWS_DEPLOY_ROLE_ARN may hold the full ARN or just the role name.
+      - name: Resolve deploy role
+        id: role
+        env:
+          ROLE: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          ACCOUNT: ${{ vars.AWS_ACCOUNT_ID }}
+        run: |
+          case "$ROLE" in
+            arn:*) arn="$ROLE" ;;
+            *) arn="arn:aws:iam::${ACCOUNT//-/}:role/$ROLE" ;;
+          esac
+          echo "arn=$arn" >> "$GITHUB_OUTPUT"
+
+      - uses: aws-actions/configure-aws-credentials@v5
         with:
-          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          role-to-assume: ${{ steps.role.outputs.arn }}
           aws-region: us-west-2
 
       - name: Deploy to AWS
