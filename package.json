@@ -1,0 +1,16 @@
+{
+  "name": "nagarkirtan-v2",
+  "private": true,
+  "workspaces": [
+    "app",
+    "infra"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w app",
+    "build": "npm run build -w app",
+    "synth": "npm run synth -w infra"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

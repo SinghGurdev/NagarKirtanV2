@@ -1,0 +1,48 @@
+name: Deploy production
+
+# Production only deploys when started by hand (Actions tab > Deploy production >
+# Run workflow) and, once required reviewers are set on the Production
+# environment, after approval.
+on:
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: deploy-prod
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: Production
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build app
+        run: npm run build
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: us-west-2
+
+      - name: Deploy to AWS
+        working-directory: infra
+        run: npx cdk deploy NagarKirtan-prod-site --require-approval never --outputs-file cdk-outputs.json
+
+      - name: Show site address
+        run: |
+          url=$(jq -r '."NagarKirtan-prod-site".SiteUrl' infra/cdk-outputs.json)
+          echo "Production site: $url"
+          echo "### Production site: $url" >> "$GITHUB_STEP_SUMMARY"

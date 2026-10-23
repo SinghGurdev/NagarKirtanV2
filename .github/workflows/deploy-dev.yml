@@ -1,0 +1,46 @@
+name: Deploy dev
+
+# Every push to main updates the dev site.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  id-token: write # lets GitHub sign in to AWS with a short-lived token
+  contents: read
+
+concurrency:
+  group: deploy-dev
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build app
+        run: npm run build
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: us-west-2
+
+      - name: Deploy to AWS
+        working-directory: infra
+        run: npx cdk deploy NagarKirtan-dev-site --require-approval never --outputs-file cdk-outputs.json
+
+      - name: Show site address
+        run: |
+          url=$(jq -r '."NagarKirtan-dev-site".SiteUrl' infra/cdk-outputs.json)
+          echo "Dev site: $url"
+          echo "### Dev site: $url" >> "$GITHUB_STEP_SUMMARY"

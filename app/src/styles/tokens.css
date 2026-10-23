@@ -1,0 +1,70 @@
+/* Colors, type and spacing from the approved design canvas (navy + kesri). */
+:root {
+  color-scheme: light dark;
+
+  --font-display: "Fraunces", Georgia, serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --bg: #f6f3ec;
+  --map-bg: #ece7dc;
+  --surface: #ffffff;
+  --surface-2: #f4f1ea;
+  --text: #161b26;
+  --text-2: #4a5263;
+  --text-3: #6b7385;
+  --border: #e4e0d6;
+  --divider: #eeeae1;
+  --route-ahead: #a9b6cc;
+
+  --primary: #1f3a6e;
+  --primary-hover: #152b54;
+  --on-primary: #ffffff;
+  --primary-tint: #e6ecf6;
+  --primary-tint-text: #1f3a6e;
+
+  --kesri: #e07a12;
+  --kesri-tint: #fbe7d2;
+  --kesri-text: #8a4608;
+
+  --amenity-restroom: #3d4451;
+  --amenity-water: #1f86b8;
+  --amenity-food: #7a3e8e;
+  --amenity-vendor: #b0306a;
+  --amenity-aid: #c62828;
+
+  --shadow-card: 0 4px 16px rgba(22, 27, 38, 0.12);
+  --radius-card: 18px;
+  --radius-control: 14px;
+  --tabbar-h: 72px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0e121a;
+    --map-bg: #0e121a;
+    --surface: #182030;
+    --surface-2: #1d2433;
+    --text: #eef1f6;
+    --text-2: #a9b1c2;
+    --text-3: #8a93a6;
+    --border: #263044;
+    --divider: #263044;
+    --route-ahead: #43527a;
+
+    --primary: #7fa4e8;
+    --primary-hover: #9db9f0;
+    --on-primary: #0b1630;
+    --primary-tint: #1e2b47;
+    --primary-tint-text: #c3d4f7;
+
+    --kesri: #f29a33;
+    --kesri-tint: #3a2810;
+    --kesri-text: #f7c489;
+
+    --amenity-restroom: #6b7385;
+    --amenity-water: #2b8fc2;
+    --amenity-food: #9558aa;
+
+    --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+}

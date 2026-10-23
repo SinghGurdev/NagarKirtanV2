@@ -1,0 +1,18 @@
+{
+  "name": "infra",
+  "private": true,
+  "scripts": {
+    "synth": "cdk synth",
+    "deploy:dev": "cdk deploy NagarKirtan-dev-site --require-approval never"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.274.0",
+    "constructs": "^10.8.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.20.5",
+    "aws-cdk": "^2.1146.1",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
+  }
+}
