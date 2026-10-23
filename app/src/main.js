@@ -17,7 +17,7 @@ const byId = Object.fromEntries(tabs.map((t) => [t.id, t]));
 if (import.meta.env.VITE_STAGE === "dev") {
   const ribbon = document.createElement("div");
   ribbon.className = "stage-ribbon";
-  ribbon.textContent = "Dev site · not the live app";
+  ribbon.textContent = "Dev site · not live";
   document.body.prepend(ribbon);
   document.title = `[Dev] ${document.title}`;
 }
