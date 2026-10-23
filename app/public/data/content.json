@@ -8,13 +8,16 @@
     "datePa": "ਅਕਤੂਬਰ 25, 2026 ਦਿਨ ਐਤਵਾਰ",
     "date": "2026-10-25",
     "timezone": "America/Los_Angeles",
-    "welcome": null
+    "welcome": null,
+    "heroImage": "/images/2026/sangat.jpg",
+    "invitationPa": "ਆਓ ਗੁਰੂ ਸਾਹਿਬ ਜੀ ਦੇ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ ਨੂੰ ਸਮਰਪਿਤ ਮਹਾਨ ਨਗਰ ਕੀਰਤਨ ਵਿੱਚ ਵੱਧ ਚੜ੍ਹ ਕੇ ਹਾਜ਼ਰੀਆਂ ਭਰੀਏ ਜੀ।"
   },
   "venues": {
     "gurdwara": {
       "name": "Gurdwara Gur Nanak Parkash",
       "address": "4250 E Lincoln Ave, Fresno, CA 93725",
-      "namePa": "ਗੁਰਦੁਆਰਾ ਗੁਰ ਨਾਨਕ ਪ੍ਰਕਾਸ਼"
+      "namePa": "ਗੁਰਦੁਆਰਾ ਗੁਰ ਨਾਨਕ ਪ੍ਰਕਾਸ਼",
+      "notePa": "(ਸ਼ਾਖਾ ਦਮਦਮੀ ਟਕਸਾਲ ਜਥਾ ਭਿੰਡਰਾਂ ਮਹਿਤਾ)"
     },
     "park": {
       "name": "Donny Wright Park",
@@ -26,6 +29,14 @@
       "id": "bhog",
       "title": "Akhand Path Bhog",
       "time": "09:00",
+      "venue": "gurdwara",
+      "followsParade": false
+    },
+    {
+      "id": "kavishar",
+      "title": "Kavishar Bhai Mehal Singh Ji 'Chandigarh Wale'",
+      "time": "10:00",
+      "endTime": "11:00",
       "venue": "gurdwara",
       "followsParade": false
     },
@@ -120,5 +131,76 @@
         "note": null
       }
     ]
-  }
+  },
+  "announcements": [
+    {
+      "id": "prabhat-pheri",
+      "titlePa": "ਪ੍ਰਭਾਤ ਫੇਰੀ",
+      "title": "Prabhat Pheri",
+      "month": "Oct",
+      "days": "21–24",
+      "dayName": null,
+      "when": "Oct 21, 22, 23 and 24 · starts 6:00 AM"
+    },
+    {
+      "id": "nishan-sahib",
+      "titlePa": "ਨਿਸ਼ਾਨ ਸਾਹਿਬ ਸੇਵਾ",
+      "title": "Nishan Sahib Seva",
+      "month": "Oct",
+      "days": "24",
+      "dayName": "Sat",
+      "when": "Saturday, Oct 24 · 9:00 AM"
+    },
+    {
+      "id": "amrit-sanchar",
+      "titlePa": "ਅੰਮ੍ਰਿਤ ਸੰਚਾਰ",
+      "title": "Amrit Sanchar",
+      "month": "Oct",
+      "days": "24",
+      "dayName": "Sat",
+      "when": "Saturday, Oct 24 · 12:00 PM"
+    }
+  ],
+  "featured": [
+    {
+      "id": "sant-ji",
+      "image": "/images/2026/sant-harnam-singh-ji.jpg",
+      "namePa": "ਸੰਤ ਗਿਆਨੀ ਹਰਨਾਮ ਸਿੰਘ ਜੀ ਖ਼ਾਲਸਾ ਭਿੰਡਰਾਂਵਾਲੇ",
+      "name": "Sant Giani Harnam Singh Ji Khalsa Bhindranwale",
+      "linesPa": [
+        "ਮੁਖੀ ਦਮਦਮੀ ਟਕਸਾਲ ਜੱਥਾ ਭਿੰਡਰਾਂ ਮਹਿਤਾ",
+        "ਪ੍ਰਧਾਨ ਸੰਤ ਸਮਾਜ"
+      ],
+      "program": []
+    },
+    {
+      "id": "kavishar",
+      "image": "/images/2026/kavishar-jatha.jpg",
+      "namePa": "ਕਵੀਸ਼ਰ ਭਾਈ ਮਹਿਲ ਸਿੰਘ ਜੀ ‘ਚੰਡੀਗੜ੍ਹ ਵਾਲੇ’",
+      "name": "Kavishar Bhai Mehal Singh Ji 'Chandigarh Wale'",
+      "linesPa": [],
+      "program": [
+        "Oct 21, 22, 23, 24 · 7:00–8:00 PM",
+        "Sunday, Oct 25 · 10:00–11:00 AM"
+      ]
+    }
+  ],
+  "contacts": [
+    {
+      "name": "Jatinder Singh",
+      "phone": "(559) 575-1205"
+    },
+    {
+      "name": "CP Singh",
+      "phone": "(510) 945-8197"
+    },
+    {
+      "name": "Sukhwinder Singh",
+      "phone": "(559) 356-2859"
+    },
+    {
+      "name": "Gurvinder Singh",
+      "phone": "(559) 809-1313"
+    }
+  ]
 }

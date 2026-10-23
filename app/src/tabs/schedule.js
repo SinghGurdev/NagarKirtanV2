@@ -24,7 +24,9 @@ export const schedule = {
               <div class="ev-where">${esc(venue?.name ?? ev.venue)}</div>
               ${tag}
             </div>
-            <div class="ev-time">${formatTime(ev.time)}</div>
+            <div class="ev-time">${formatTime(ev.time)}${
+              ev.endTime ? `<span class="ev-end">to ${formatTime(ev.endTime)}</span>` : ""
+            }</div>
           </li>`;
       })
       .join("");
