@@ -4,3 +4,4 @@ cdk.out/
 .DS_Store
 *.log
 .env
+infra/lambda/live/geo.mjs
