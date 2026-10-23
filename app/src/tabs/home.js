@@ -23,7 +23,7 @@ export const home = {
       </section>
 
       <div class="quick-grid">
-        <a class="quick-link" href="#/parade">${icons.parade(24)}Parade<span>Where it is now</span></a>
+        <a class="quick-link" href="#/parade">${icons.parade(24)}Nagar Kirtan<span>Where it is now</span></a>
         <a class="quick-link" href="#/schedule">${icons.schedule(24)}Schedule<span>Times update live</span></a>
         <a class="quick-link" href="#/parking">${icons.parking(24)}Parking<span>Directions to the lot</span></a>
         <a class="quick-link" href="#/grounds">${icons.grounds(24)}Grounds<span>Food, restrooms, first aid</span></a>

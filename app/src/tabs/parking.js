@@ -13,7 +13,7 @@ export const parking = {
         <div><h1>Parking</h1></div>
       </header>
       <section class="card">
-        <h2>${esc(p.name || "Parade parking")}</h2>
+        <h2>${esc(p.name || "Nagar Kirtan parking")}</h2>
         <p>Parking for ${esc(gurdwara.name)}</p>
         <div class="details${p.details ? "" : " details--empty"}">${
           p.details ? esc(p.details) : "Parking details coming soon."

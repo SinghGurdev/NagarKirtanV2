@@ -1,6 +1,6 @@
 # Nagar Kirtan V2
 
-Mobile web app for the yearly Nagar Kirtan at Gurdwara Gur Nanak Parkash, Fresno: live parade map, schedule, parking and a map of the Gurdwara grounds.
+Mobile web app for the yearly Nagar Kirtan at Gurdwara Gur Nanak Parkash, Fresno: live Nagar Kirtan map, schedule, parking and a map of the Gurdwara grounds.
 
 ## Layout
 

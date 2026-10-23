@@ -14,7 +14,7 @@ export const schedule = {
         const venue = content.venues[ev.venue];
         const last = i === items.length - 1;
         const tag = ev.followsParade
-          ? '<span class="ev-tag ev-tag--live">Updates with the parade</span>'
+          ? '<span class="ev-tag ev-tag--live">Updates with the Nagar Kirtan</span>'
           : '<span class="ev-tag">Set time</span>';
         return `
           <li class="ev${ev.followsParade ? " ev--parade" : ""}${last ? " ev--last" : ""}">
@@ -39,7 +39,7 @@ export const schedule = {
       <section class="card">
         <ol class="timeline">${rows}</ol>
       </section>
-      <p class="footnote">Parade times will adjust live on the day as the parade moves.</p>
+      <p class="footnote">Nagar Kirtan times will adjust live on the day as it moves.</p>
     `;
   },
 };

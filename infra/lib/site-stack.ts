@@ -5,11 +5,15 @@ import * as s3 from "aws-cdk-lib/aws-s3";
 import * as cloudfront from "aws-cdk-lib/aws-cloudfront";
 import * as origins from "aws-cdk-lib/aws-cloudfront-origins";
 import * as s3deploy from "aws-cdk-lib/aws-s3-deployment";
+import * as acm from "aws-cdk-lib/aws-certificatemanager";
+import { StageDomain } from "./config";
 
 export interface SiteStackProps extends StackProps {
   stage: "dev" | "prod";
   /** Folder with the built app (app/dist). */
   siteDir: string;
+  /** Custom web address; only applied once its certificate ARN is set. */
+  domain?: StageDomain | null;
 }
 
 /**
@@ -30,8 +34,14 @@ export class SiteStack extends Stack {
       autoDeleteObjects: !isProd,
     });
 
+    const custom = props.domain?.certificateArn ? props.domain : null;
+
     const distribution = new cloudfront.Distribution(this, "SiteDistribution", {
       comment: `Nagar Kirtan ${props.stage}`,
+      ...(custom && {
+        domainNames: [custom.domainName],
+        certificate: acm.Certificate.fromCertificateArn(this, "SiteCertificate", custom.certificateArn!),
+      }),
       defaultRootObject: "index.html",
       priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
       defaultBehavior: {
@@ -67,7 +77,10 @@ export class SiteStack extends Stack {
     });
     rest.node.addDependency(assets);
 
-    new CfnOutput(this, "SiteUrl", { value: `https://${distribution.distributionDomainName}` });
+    new CfnOutput(this, "SiteUrl", {
+      value: custom ? `https://${custom.domainName}` : `https://${distribution.distributionDomainName}`,
+    });
+    new CfnOutput(this, "CloudFrontDomain", { value: distribution.distributionDomainName });
     new CfnOutput(this, "BucketName", { value: bucket.bucketName });
   }
 }
