@@ -15,6 +15,7 @@ const byId = Object.fromEntries(tabs.map((t) => [t.id, t]));
 const view = document.getElementById("view");
 const tabbar = document.getElementById("tabbar");
 let content = null;
+let cleanup = null; // set by a tab's mount() (e.g. to remove its map)
 
 tabbar.innerHTML = tabs
   .map((t) => `<a class="tab" href="#/${t.id}" data-tab="${t.id}">${icons[t.id]()}${t.label}</a>`)
@@ -33,8 +34,12 @@ function show() {
   }
   document.title = tab.id === "home" ? "Nagar Kirtan" : `${tab.title} · Nagar Kirtan`;
   if (!content) return;
+  cleanup?.();
+  cleanup = null;
   view.innerHTML = tab.render(content);
+  view.dataset.tab = tab.id;
   window.scrollTo(0, 0);
+  if (tab.mount) cleanup = tab.mount(view, content) ?? null;
 }
 
 window.addEventListener("hashchange", show);

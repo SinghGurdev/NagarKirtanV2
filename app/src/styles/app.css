@@ -681,3 +681,120 @@ h3 {
 .contact svg {
   color: var(--primary);
 }
+
+/* Full-width map at the top of a tab (Parking, Grounds, live map) */
+.map-hero {
+  position: relative;
+  margin: -16px -16px 0;
+  height: min(56vh, 440px);
+  background: var(--map-bg);
+}
+/* Doubled class beats MapLibre's own ".maplibregl-map { position: relative }",
+   which loads later and would collapse the map to zero height. */
+.map-hero .map-canvas.map-canvas {
+  position: absolute;
+  inset: 0;
+}
+.map-canvas--error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+  color: var(--text-2);
+  font-size: 15px;
+}
+.map-title {
+  position: absolute;
+  top: calc(12px + env(safe-area-inset-top));
+  left: 12px;
+  padding: 8px 16px;
+  border-radius: 14px;
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  z-index: 2;
+}
+.map-title h1 {
+  font-size: 24px;
+  color: var(--primary);
+}
+.map-btn {
+  position: absolute;
+  top: calc(12px + env(safe-area-inset-top));
+  right: 12px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--surface);
+  color: var(--primary);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 2;
+  cursor: pointer;
+}
+.map-btn:focus-visible {
+  outline: 3px solid var(--kesri);
+  outline-offset: 2px;
+}
+/* The card under a map. It sits just below so the map credits stay visible. */
+.sheet {
+  position: relative;
+  z-index: 3;
+  margin-top: 12px;
+}
+
+/* Map pins */
+.map-pin {
+  cursor: default;
+}
+.map-pin--parking .pin-p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--primary-deep);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 24px;
+  line-height: 1;
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 4px var(--kesri), 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.map-pin--place {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.map-pin--place .pin-label {
+  display: block;
+  padding: 6px 10px;
+  border-radius: 10px;
+  background: var(--primary-deep);
+  color: var(--gold);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 14px;
+  line-height: 1.2;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+.map-pin--place::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border: 7px solid transparent;
+  border-top-color: var(--primary-deep);
+  margin-top: -1px;
+}
+
+/* Keep MapLibre's attribution readable but small */
+.maplibregl-ctrl-attrib {
+  font-size: 11px;
+}

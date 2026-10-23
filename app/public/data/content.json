@@ -17,7 +17,9 @@
       "name": "Gurdwara Gur Nanak Parkash",
       "address": "4250 E Lincoln Ave, Fresno, CA 93725",
       "namePa": "ਗੁਰਦੁਆਰਾ ਗੁਰ ਨਾਨਕ ਪ੍ਰਕਾਸ਼",
-      "notePa": "(ਸ਼ਾਖਾ ਦਮਦਮੀ ਟਕਸਾਲ ਜਥਾ ਭਿੰਡਰਾਂ ਮਹਿਤਾ)"
+      "notePa": "(ਸ਼ਾਖਾ ਦਮਦਮੀ ਟਕਸਾਲ ਜਥਾ ਭਿੰਡਰਾਂ ਮਹਿਤਾ)",
+      "lat": 36.6506,
+      "lng": -119.7118
     },
     "park": {
       "name": "Donny Wright Park",
