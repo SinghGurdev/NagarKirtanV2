@@ -12,6 +12,16 @@ import { grounds } from "./tabs/grounds.js";
 const tabs = [home, schedule, live, parking, grounds];
 const byId = Object.fromEntries(tabs.map((t) => [t.id, t]));
 
+// The dev site (built with VITE_STAGE=dev) says so, so nobody mistakes it
+// for the real one.
+if (import.meta.env.VITE_STAGE === "dev") {
+  const ribbon = document.createElement("div");
+  ribbon.className = "stage-ribbon";
+  ribbon.textContent = "Dev site · not the live app";
+  document.body.prepend(ribbon);
+  document.title = `[Dev] ${document.title}`;
+}
+
 const view = document.getElementById("view");
 const tabbar = document.getElementById("tabbar");
 let content = null;
@@ -43,7 +53,8 @@ function show() {
     if (a.dataset.tab === tab.id) a.setAttribute("aria-current", "page");
     else a.removeAttribute("aria-current");
   }
-  document.title = tab.id === "home" ? "Nagar Kirtan" : `${tab.title} · Nagar Kirtan`;
+  const devTag = import.meta.env.VITE_STAGE === "dev" ? "[Dev] " : "";
+  document.title = devTag + (tab.id === "home" ? "Nagar Kirtan" : `${tab.title} · Nagar Kirtan`);
   if (!content) return;
   cleanup?.();
   cleanup = null;

@@ -19,9 +19,13 @@ npm run build      # builds app/dist
 npm run synth      # checks the AWS code (needs a build first)
 ```
 
-## Deploying
+## Sites
 
-- **Dev:** push to `main`. The *Deploy dev* run prints the site address in its summary.
-- **Production:** GitHub > Actions > *Deploy production* > Run workflow (on `main`).
+| Site | Address | Updates when | AWS stack |
+| --- | --- | --- | --- |
+| **Production** | https://ggnp.gurdevs.com | You run GitHub > Actions > *Deploy production* > Run workflow | `NagarKirtan-dev-site` (old name kept on purpose, see `infra/lib/config.ts`) |
+| **Dev** | Printed in each *Deploy dev* run summary (a cloudfront.net address) | Every push to `main` | `NagarKirtan-staging-site` |
+
+The dev site shows a "Dev site" banner. Typical flow: change something (or edit `app/public/data/content.json` on GitHub), check it on the dev site, then run *Deploy production*.
 
 GitHub signs in to AWS with a short-lived token through the `GitHub-NagarKirtan-deploy` IAM role, so no AWS keys are stored anywhere. The repo variables `AWS_ACCOUNT_ID` and `AWS_DEPLOY_ROLE_ARN` tell the workflows which account and role to use.

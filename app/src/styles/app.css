@@ -976,3 +976,22 @@ h3 {
 .map-pin--park::after {
   border-top-color: var(--kesri);
 }
+
+/* Banner shown only on the dev site */
+.stage-ribbon {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--tabbar-h) + env(safe-area-inset-bottom) + 8px);
+  transform: translateX(-50%);
+  z-index: 20;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--kesri);
+  color: #14247a;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}

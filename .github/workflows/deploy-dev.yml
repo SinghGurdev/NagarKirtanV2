@@ -1,6 +1,7 @@
 name: Deploy dev
 
-# Every push to main updates the dev site.
+# Every push to main updates the DEV site (stack NagarKirtan-staging-site,
+# its own CloudFront address). Production is not touched; see deploy-prod.yml.
 on:
   push:
     branches: [main]
@@ -29,6 +30,8 @@ jobs:
 
       - name: Build app
         run: npm run build
+        env:
+          VITE_STAGE: dev # shows the "Dev site" banner
 
       # AWS_DEPLOY_ROLE_ARN may hold the full ARN or just the role name.
       - name: Resolve deploy role
@@ -57,10 +60,10 @@ jobs:
 
       - name: Deploy to AWS
         working-directory: infra
-        run: npx cdk deploy NagarKirtan-dev-site --require-approval never --outputs-file cdk-outputs.json
+        run: npx cdk deploy NagarKirtan-staging-site --require-approval never --outputs-file cdk-outputs.json
 
       - name: Show site address
         run: |
-          url=$(jq -r '."NagarKirtan-dev-site".SiteUrl' infra/cdk-outputs.json)
+          url=$(jq -r '."NagarKirtan-staging-site".SiteUrl' infra/cdk-outputs.json)
           echo "Dev site: $url"
           echo "### Dev site: $url" >> "$GITHUB_STEP_SUMMARY"

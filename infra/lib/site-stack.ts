@@ -14,6 +14,8 @@ export interface SiteStackProps extends StackProps {
   siteDir: string;
   /** Custom web address; only applied once its certificate ARN is set. */
   domain?: StageDomain | null;
+  /** Keep the bucket (and its files) if the stack is deleted. */
+  retainBucket?: boolean;
 }
 
 /**
@@ -24,14 +26,12 @@ export interface SiteStackProps extends StackProps {
 export class SiteStack extends Stack {
   constructor(scope: Construct, id: string, props: SiteStackProps) {
     super(scope, id, props);
-    const isProd = props.stage === "prod";
-
     const bucket = new s3.Bucket(this, "SiteBucket", {
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       encryption: s3.BucketEncryption.S3_MANAGED,
       enforceSSL: true,
-      removalPolicy: isProd ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
-      autoDeleteObjects: !isProd,
+      removalPolicy: props.retainBucket ? RemovalPolicy.RETAIN : RemovalPolicy.DESTROY,
+      autoDeleteObjects: !props.retainBucket,
     });
 
     const custom = props.domain?.certificateArn ? props.domain : null;

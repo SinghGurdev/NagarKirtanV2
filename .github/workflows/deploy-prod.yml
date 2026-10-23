@@ -1,5 +1,7 @@
 name: Deploy production
 
+# Updates PRODUCTION, https://ggnp.gurdevs.com. Its stack keeps the old name
+# "NagarKirtan-dev-site" on purpose (see infra/lib/config.ts).
 # Production only deploys when started by hand (Actions tab > Deploy production >
 # Run workflow) and, once required reviewers are set on the Production
 # environment, after approval.
@@ -59,10 +61,10 @@ jobs:
 
       - name: Deploy to AWS
         working-directory: infra
-        run: npx cdk deploy NagarKirtan-prod-site --require-approval never --outputs-file cdk-outputs.json
+        run: npx cdk deploy NagarKirtan-dev-site --require-approval never --outputs-file cdk-outputs.json
 
       - name: Show site address
         run: |
-          url=$(jq -r '."NagarKirtan-prod-site".SiteUrl' infra/cdk-outputs.json)
+          url=$(jq -r '."NagarKirtan-dev-site".SiteUrl' infra/cdk-outputs.json)
           echo "Production site: $url"
           echo "### Production site: $url" >> "$GITHUB_STEP_SUMMARY"
