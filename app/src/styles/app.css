@@ -28,9 +28,9 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 800;
   margin: 0;
-  line-height: 1.15;
+  line-height: 1.1;
 }
 
 .shell {
@@ -54,7 +54,8 @@ h3 {
   padding: 4px 4px 16px;
 }
 .page-head h1 {
-  font-size: 26px;
+  font-size: 30px;
+  color: var(--primary);
 }
 .page-head .sub {
   font-size: 12px;
@@ -67,6 +68,7 @@ h3 {
   background: var(--surface);
   border-radius: var(--radius-card);
   padding: 16px;
+  box-shadow: var(--shadow-card);
 }
 .card + .card {
   margin-top: 12px;
@@ -122,6 +124,7 @@ h3 {
   margin-top: 12px;
 }
 .quick-link {
+  box-shadow: var(--shadow-card);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -150,16 +153,11 @@ h3 {
   bottom: 0;
   height: calc(var(--tabbar-h) + env(safe-area-inset-bottom));
   padding-bottom: env(safe-area-inset-bottom);
-  background: var(--surface);
+  background: var(--tabbar-bg);
   border-top: 1px solid var(--border);
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   z-index: 10;
-}
-@media (prefers-color-scheme: dark) {
-  .tabbar {
-    background: #131a27;
-  }
 }
 .tab {
   display: flex;
@@ -173,9 +171,23 @@ h3 {
   font-weight: 600;
   min-height: 44px;
 }
+.tab {
+  position: relative;
+}
 .tab[aria-current="page"] {
   color: var(--primary);
   font-weight: 700;
+}
+/* Saffron bar over the active tab, like the poster's banner trim. */
+.tab[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 22%;
+  right: 22%;
+  height: 3px;
+  border-radius: 0 0 3px 3px;
+  background: var(--kesri);
 }
 .tab:focus-visible,
 .quick-link:focus-visible {
@@ -355,4 +367,89 @@ h3 {
   font-size: 13px;
   color: var(--text-2);
   margin-top: 2px;
+}
+
+/* Home banner, after the poster: royal blue with gold Gurmukhi lettering */
+.hero {
+  position: relative;
+  overflow: hidden;
+  margin: -16px -16px 16px;
+  padding: 0 0 22px;
+  color: #fff;
+  text-align: center;
+  background:
+    radial-gradient(120% 70% at 50% 0%, rgba(255, 194, 26, 0.18), transparent 60%),
+    linear-gradient(180deg, #1e3a9c 0%, #14247a 100%);
+  border-bottom: 5px solid var(--kesri);
+  border-radius: 0 0 28px 28px;
+}
+.hero-dedication {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--gold);
+  background: rgba(0, 0, 0, 0.18);
+  padding: 10px 20px;
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 54px;
+  line-height: 1.1;
+  margin: 18px 0 0;
+  background: linear-gradient(180deg, #ffe066 0%, #ffc21a 45%, #f29100 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.25));
+}
+.hero-subtitle-pa {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+  margin-top: 2px;
+}
+.hero-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #d3dcff;
+  margin-top: 2px;
+}
+.hero-date {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: #14247a;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 17px;
+  line-height: 1.2;
+}
+.hero-date small {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+}
+.hero-place {
+  margin-top: 14px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 19px;
+}
+.hero-place small {
+  display: block;
+  text-wrap: balance;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 12px;
+  color: #d3dcff;
+}
+.hero-inner {
+  padding: calc(env(safe-area-inset-top)) 16px 0;
 }

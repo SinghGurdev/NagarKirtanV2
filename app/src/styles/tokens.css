@@ -1,30 +1,35 @@
-/* Colors, type and spacing from the approved design canvas (navy + kesri). */
+/* Colors and type taken from the 2026 Nagar Kirtan poster:
+   royal blue, saffron and gold on a warm cream ground. */
 :root {
   color-scheme: light dark;
 
-  --font-display: "Fraunces", Georgia, serif;
-  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Baloo Paaji 2", "Figtree", system-ui, sans-serif;
+  --font-body: "Figtree", "Baloo Paaji 2", system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  --bg: #f6f3ec;
-  --map-bg: #ece7dc;
+  --bg: #fff6ea;
+  --map-bg: #f3eadb;
   --surface: #ffffff;
-  --surface-2: #f4f1ea;
-  --text: #161b26;
-  --text-2: #4a5263;
-  --text-3: #6b7385;
-  --border: #e4e0d6;
-  --divider: #eeeae1;
-  --route-ahead: #a9b6cc;
+  --surface-2: #fbf1e3;
+  --text: #161b33;
+  --text-2: #4a5170;
+  --text-3: #6b7290;
+  --border: #eadcc7;
+  --divider: #f1e6d6;
+  --route-ahead: #a9b4d8;
 
-  --primary: #1f3a6e;
-  --primary-hover: #152b54;
+  --primary: #1e3a9c;
+  --primary-hover: #16297a;
+  --primary-deep: #14247a;
   --on-primary: #ffffff;
-  --primary-tint: #e6ecf6;
-  --primary-tint-text: #1f3a6e;
+  --primary-tint: #e5eaf8;
+  --primary-tint-text: #1e3a9c;
 
-  --kesri: #e07a12;
-  --kesri-tint: #fbe7d2;
+  /* Poster gold (title lettering) and saffron (banner trim). */
+  --gold: #ffc21a;
+  --kesri: #f29100;
+  --kesri-tint: #ffe8c7;
   --kesri-text: #8a4608;
+  --maroon: #7a1418;
 
   --amenity-restroom: #3d4451;
   --amenity-water: #1f86b8;
@@ -32,39 +37,42 @@
   --amenity-vendor: #b0306a;
   --amenity-aid: #c62828;
 
-  --shadow-card: 0 4px 16px rgba(22, 27, 38, 0.12);
+  --shadow-card: 0 4px 16px rgba(20, 36, 122, 0.1);
   --radius-card: 18px;
   --radius-control: 14px;
   --tabbar-h: 72px;
+  --tabbar-bg: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0e121a;
-    --map-bg: #0e121a;
-    --surface: #182030;
-    --surface-2: #1d2433;
-    --text: #eef1f6;
-    --text-2: #a9b1c2;
-    --text-3: #8a93a6;
-    --border: #263044;
-    --divider: #263044;
-    --route-ahead: #43527a;
+    --bg: #0b1233;
+    --map-bg: #0b1233;
+    --surface: #16204a;
+    --surface-2: #1c2856;
+    --text: #f1f3fb;
+    --text-2: #aab4d4;
+    --text-3: #8b95b8;
+    --border: #2a3772;
+    --divider: #26336a;
+    --route-ahead: #45559a;
 
-    --primary: #7fa4e8;
-    --primary-hover: #9db9f0;
-    --on-primary: #0b1630;
-    --primary-tint: #1e2b47;
-    --primary-tint-text: #c3d4f7;
+    --primary: #9fb4ff;
+    --primary-hover: #bfcdff;
+    --primary-deep: #14247a;
+    --on-primary: #0b1233;
+    --primary-tint: #22306a;
+    --primary-tint-text: #d3dcff;
 
-    --kesri: #f29a33;
-    --kesri-tint: #3a2810;
-    --kesri-text: #f7c489;
+    --kesri: #ffb238;
+    --kesri-tint: #3d2a0c;
+    --kesri-text: #ffd08a;
 
     --amenity-restroom: #6b7385;
     --amenity-water: #2b8fc2;
     --amenity-food: #9558aa;
 
     --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --tabbar-bg: #0f1840;
   }
 }

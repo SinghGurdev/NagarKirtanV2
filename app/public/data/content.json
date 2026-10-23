@@ -1,6 +1,11 @@
 {
   "event": {
     "name": "Nagar Kirtan",
+    "titlePa": "ਸਾਲਾਨਾ ਜਲੂਸ",
+    "subtitlePa": "(ਨਗਰ ਕੀਰਤਨ)",
+    "subtitle": "Annual Nagar Kirtan",
+    "dedicationPa": "ਧੰਨ ਧੰਨ ਸਾਹਿਬ ਸ੍ਰੀ ਗੁਰੂ ਨਾਨਕ ਦੇਵ ਜੀ ਦੇ ਪਾਵਨ ਪ੍ਰਕਾਸ਼ ਪੁਰਬ ਨੂੰ ਸਮਰਪਿਤ",
+    "datePa": "ਅਕਤੂਬਰ 25, 2026 ਦਿਨ ਐਤਵਾਰ",
     "date": "2026-10-25",
     "timezone": "America/Los_Angeles",
     "welcome": null
@@ -8,7 +13,8 @@
   "venues": {
     "gurdwara": {
       "name": "Gurdwara Gur Nanak Parkash",
-      "address": "4250 E Lincoln Ave, Fresno, CA 93725"
+      "address": "4250 E Lincoln Ave, Fresno, CA 93725",
+      "namePa": "ਗੁਰਦੁਆਰਾ ਗੁਰ ਨਾਨਕ ਪ੍ਰਕਾਸ਼"
     },
     "park": {
       "name": "Donny Wright Park",
@@ -60,13 +66,59 @@
   },
   "grounds": {
     "amenities": [
-      { "id": "food", "type": "food", "name": "Food tents", "where": "North and east sides of the Gurdwara", "note": null },
-      { "id": "vendors", "type": "vendor", "name": "Vendor stalls", "where": "South of the Gurdwara, west side of the lot", "note": null },
-      { "id": "w1", "type": "restroom", "variant": "women", "name": "Women's restroom", "where": "Between the Gurdwara and the building to its west", "note": null },
-      { "id": "m1", "type": "restroom", "variant": "men", "name": "Men's restroom", "where": "Between the Gurdwara and the building to its west", "note": null },
-      { "id": "w2", "type": "restroom", "variant": "women", "name": "Women's restroom", "where": "West side of the Gurdwara", "note": null },
-      { "id": "m2", "type": "restroom", "variant": "men", "name": "Men's restroom", "where": "East side of the Gurdwara", "note": null },
-      { "id": "aid", "type": "aid", "name": "First aid", "where": "East side of the Gurdwara, by the drive", "note": null }
+      {
+        "id": "food",
+        "type": "food",
+        "name": "Food tents",
+        "where": "North and east sides of the Gurdwara",
+        "note": null
+      },
+      {
+        "id": "vendors",
+        "type": "vendor",
+        "name": "Vendor stalls",
+        "where": "South of the Gurdwara, west side of the lot",
+        "note": null
+      },
+      {
+        "id": "w1",
+        "type": "restroom",
+        "variant": "women",
+        "name": "Women's restroom",
+        "where": "Between the Gurdwara and the building to its west",
+        "note": null
+      },
+      {
+        "id": "m1",
+        "type": "restroom",
+        "variant": "men",
+        "name": "Men's restroom",
+        "where": "Between the Gurdwara and the building to its west",
+        "note": null
+      },
+      {
+        "id": "w2",
+        "type": "restroom",
+        "variant": "women",
+        "name": "Women's restroom",
+        "where": "West side of the Gurdwara",
+        "note": null
+      },
+      {
+        "id": "m2",
+        "type": "restroom",
+        "variant": "men",
+        "name": "Men's restroom",
+        "where": "East side of the Gurdwara",
+        "note": null
+      },
+      {
+        "id": "aid",
+        "type": "aid",
+        "name": "First aid",
+        "where": "East side of the Gurdwara, by the drive",
+        "note": null
+      }
     ]
   }
 }
