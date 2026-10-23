@@ -1,22 +1,25 @@
 import { icons } from "../icons.js";
+import { esc, formatDate } from "../data.js";
 
 export const home = {
   id: "home",
   label: "Home",
   title: "Nagar Kirtan",
-  render() {
+  render(content) {
+    const { event, venues } = content;
+    const date = formatDate(event.date);
     return `
       <header class="page-head">
         <div>
-          <h1>Nagar Kirtan</h1>
-          <div class="sub">Gurdwara Gur Nanak Parkash · 4250 E Lincoln Ave, Fresno</div>
+          <h1>${esc(event.name)}</h1>
+          <div class="sub">${esc(venues.gurdwara.name)} · ${esc(venues.gurdwara.address)}</div>
         </div>
       </header>
 
       <section class="card">
-        <div class="eyebrow">[Event date]</div>
+        <div class="eyebrow">${date ? esc(date) : "Date to be announced"}</div>
         <h2>Welcome</h2>
-        <p>[Welcome message from the committee]</p>
+        <p>${event.welcome ? esc(event.welcome) : "Details for this year's Nagar Kirtan are on the tabs below."}</p>
       </section>
 
       <div class="quick-grid">

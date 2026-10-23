@@ -1,8 +1,12 @@
 import "./styles/tokens.css";
 import "./styles/app.css";
 import { icons } from "./icons.js";
+import { loadContent } from "./data.js";
 import { home } from "./tabs/home.js";
-import { schedule, parade, parking, grounds } from "./tabs/placeholders.js";
+import { schedule } from "./tabs/schedule.js";
+import { parade } from "./tabs/placeholders.js";
+import { parking } from "./tabs/parking.js";
+import { grounds } from "./tabs/grounds.js";
 
 // Tab order matches the bottom tab bar in the designs.
 const tabs = [home, schedule, parade, parking, grounds];
@@ -10,6 +14,7 @@ const byId = Object.fromEntries(tabs.map((t) => [t.id, t]));
 
 const view = document.getElementById("view");
 const tabbar = document.getElementById("tabbar");
+let content = null;
 
 tabbar.innerHTML = tabs
   .map((t) => `<a class="tab" href="#/${t.id}" data-tab="${t.id}">${icons[t.id]()}${t.label}</a>`)
@@ -22,14 +27,28 @@ function currentTab() {
 
 function show() {
   const tab = currentTab();
-  view.innerHTML = tab.render();
-  document.title = tab.id === "home" ? "Nagar Kirtan" : `${tab.title} · Nagar Kirtan`;
   for (const a of tabbar.querySelectorAll(".tab")) {
     if (a.dataset.tab === tab.id) a.setAttribute("aria-current", "page");
     else a.removeAttribute("aria-current");
   }
+  document.title = tab.id === "home" ? "Nagar Kirtan" : `${tab.title} · Nagar Kirtan`;
+  if (!content) return;
+  view.innerHTML = tab.render(content);
   window.scrollTo(0, 0);
 }
 
 window.addEventListener("hashchange", show);
 show();
+
+loadContent()
+  .then((c) => {
+    content = c;
+    show();
+  })
+  .catch(() => {
+    view.innerHTML = `
+      <section class="card">
+        <h2>Can't load the event details</h2>
+        <p>Check your connection and pull down to refresh.</p>
+      </section>`;
+  });

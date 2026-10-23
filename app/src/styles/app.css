@@ -183,3 +183,176 @@ h3 {
   outline-offset: -4px;
   border-radius: 12px;
 }
+
+.footnote {
+  font-size: 13px;
+  color: var(--text-2);
+  margin: 12px 4px 0;
+}
+
+/* Schedule timeline */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ev {
+  position: relative;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) auto;
+  gap: 12px;
+  padding: 10px 0 12px;
+}
+.ev + .ev {
+  border-top: 1px solid var(--divider);
+}
+.ev-rail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+/* Dashed line joining the parade events, drawn from each dot down to the next. */
+.ev--parade:not(.ev--last) .ev-rail::after {
+  content: "";
+  position: absolute;
+  top: 22px;
+  bottom: -24px;
+  left: 50%;
+  border-left: 3px dashed var(--route-ahead);
+  transform: translateX(-50%);
+}
+.ev-dot {
+  width: 16px;
+  height: 16px;
+  margin-top: 3px;
+  border-radius: 50%;
+  border: 3px solid var(--primary);
+  background: var(--surface);
+  position: relative;
+  z-index: 1;
+}
+.ev:not(.ev--parade) .ev-dot {
+  border-color: var(--text-3);
+}
+.ev-dot--end {
+  border-radius: 4px;
+  background: var(--text);
+  border-color: var(--text);
+}
+.ev-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+.ev-where {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-top: 2px;
+}
+.ev-time {
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.ev-tag {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--surface-2);
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+.ev-tag--live {
+  color: var(--primary-tint-text);
+  background: var(--primary-tint);
+}
+
+/* Parking */
+.details {
+  margin: 14px 0;
+  padding: 12px 14px;
+  border-radius: var(--radius-control);
+  background: var(--surface-2);
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+.details--empty {
+  background: transparent;
+  border: 1.5px dashed var(--border);
+  color: var(--text-2);
+}
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 52px;
+  border-radius: var(--radius-control);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.btn-primary:active {
+  background: var(--primary-hover);
+}
+.btn-primary:focus-visible {
+  outline: 3px solid var(--kesri);
+  outline-offset: 2px;
+}
+.card p.btn-note {
+  font-size: 12px;
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* Grounds list */
+.group-title {
+  font-size: 18px;
+  margin: 18px 4px 8px;
+}
+.group-title:first-of-type {
+  margin-top: 4px;
+}
+.amenities {
+  list-style: none;
+  margin: 0;
+  padding: 4px 16px;
+}
+.amenity {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 0;
+}
+.amenity + .amenity {
+  border-top: 1px solid var(--divider);
+}
+.amenity-icon {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+}
+.amenity-icon--food { background: var(--amenity-food); }
+.amenity-icon--vendor { background: var(--amenity-vendor); }
+.amenity-icon--restroom { background: var(--amenity-restroom); }
+.amenity-icon--aid { background: var(--amenity-aid); }
+.amenity-name {
+  font-weight: 700;
+}
+.amenity-where,
+.amenity-note {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-top: 2px;
+}
