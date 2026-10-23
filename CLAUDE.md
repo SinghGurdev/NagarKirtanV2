@@ -10,3 +10,4 @@
 - Deploys only through GitHub Actions (OIDC role, no keys). Pushing to `main` deploys dev. Never trigger the production workflow; the owner does that.
 - Planned live data: visitors poll `live.json` (cached a few seconds by CloudFront); the lead phone and admins write through a small API (API Gateway + Lambda), guarded by passcodes in SSM. Keep secrets out of the repo; it is public.
 - Commit and push small, working steps; check `npm run build` and `npm run synth` before pushing.
+- The owner edits `app/public/data/content.json` directly on GitHub. Always `git fetch` and rebase onto `origin/main` before pushing, keep their wording, and never hide `git push` errors.
