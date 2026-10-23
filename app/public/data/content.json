@@ -83,8 +83,8 @@
     "details": null,
     "shuttle": {
       "title": "Trolley to the Gurdwara",
-      "text": "Trolleys will be running to and from the Gurdwara ",
-      "hours": 9am to 7pm
+      "text": "Trolleys will be running to and from the Gurdwara from 9am to 7pm",
+      "hours": null
     }
   },
   "grounds": {
