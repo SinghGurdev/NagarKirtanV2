@@ -27,7 +27,7 @@ function loadLib() {
  * Creates a map inside `el`. Returns { map, lib, destroy }.
  * `fit` is a list of [lng, lat] points to frame on load.
  */
-export async function createMap(el, { fit = [], center, zoom = 14, padding = 48, maxZoom = 17 } = {}) {
+export async function createMap(el, { fit = [], center, zoom = 14, padding = 48, maxZoom = 17, onStyle } = {}) {
   const lib = await loadLib();
   if (!el.isConnected) return null;
 
@@ -44,6 +44,10 @@ export async function createMap(el, { fit = [], center, zoom = 14, padding = 48,
   });
   map.touchZoomRotate.disableRotation();
   map.addControl(new lib.AttributionControl({ compact: true }), "bottom-right");
+
+  // Lines and areas we draw live in the map style, so they are re-added
+  // every time a style loads (first load and light/dark switches).
+  if (onStyle) map.on("style.load", () => onStyle(map));
 
   const frame = () => {
     if (fit.length < 2) return;
@@ -67,6 +71,9 @@ export async function createMap(el, { fit = [], center, zoom = 14, padding = 48,
     },
   };
 }
+
+/** Reads a color token from the stylesheet (follows light/dark). */
+export const token = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
 /** A map pin built from HTML so it can use the app's colors and fonts. */
 export function pin(lib, { html, className = "", label, anchor = "bottom" }) {

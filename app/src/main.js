@@ -4,12 +4,12 @@ import { icons } from "./icons.js";
 import { loadContent } from "./data.js";
 import { home } from "./tabs/home.js";
 import { schedule } from "./tabs/schedule.js";
-import { parade } from "./tabs/placeholders.js";
+import { live } from "./tabs/live.js";
 import { parking } from "./tabs/parking.js";
 import { grounds } from "./tabs/grounds.js";
 
 // Tab order matches the bottom tab bar in the designs.
-const tabs = [home, schedule, parade, parking, grounds];
+const tabs = [home, schedule, live, parking, grounds];
 const byId = Object.fromEntries(tabs.map((t) => [t.id, t]));
 
 const view = document.getElementById("view");

@@ -1,0 +1,263 @@
+{
+  "legs": [
+    {
+      "id": "outbound",
+      "from": "gurdwara",
+      "to": "park",
+      "startStreet": "E Lincoln Ave",
+      "lengthMeters": 5684,
+      "coordinates": [
+        [
+          -119.711848,
+          36.64902
+        ],
+        [
+          -119.709787,
+          36.648955
+        ],
+        [
+          -119.709186,
+          36.648448
+        ],
+        [
+          -119.708927,
+          36.647458
+        ],
+        [
+          -119.708992,
+          36.645232
+        ],
+        [
+          -119.708956,
+          36.643209
+        ],
+        [
+          -119.708938,
+          36.639794
+        ],
+        [
+          -119.708999,
+          36.634324
+        ],
+        [
+          -119.704367,
+          36.634335
+        ],
+        [
+          -119.700025,
+          36.634458
+        ],
+        [
+          -119.700129,
+          36.62724
+        ],
+        [
+          -119.691129,
+          36.627187
+        ],
+        [
+          -119.691253,
+          36.620028
+        ],
+        [
+          -119.686754,
+          36.619998
+        ],
+        [
+          -119.686686,
+          36.621399
+        ],
+        [
+          -119.686331,
+          36.621638
+        ],
+        [
+          -119.685953,
+          36.621933
+        ]
+      ],
+      "segmentStreets": [
+        "E Lincoln Ave",
+        "S Minnewawa Ave",
+        "S Minnewawa Ave",
+        "S Minnewawa Ave",
+        "S Minnewawa Ave",
+        "S Minnewawa Ave",
+        "S Minnewawa Ave",
+        "E Adams Ave",
+        "E Adams Ave",
+        "S Clovis Ave",
+        "E Sumner Ave",
+        "S Sunnyside Ave",
+        "E South Ave",
+        "Stanford Ave",
+        "W Fresno St",
+        "W Fresno St"
+      ],
+      "turns": [
+        {
+          "atVertex": 1,
+          "atMeters": 184,
+          "direction": "right",
+          "onto": "S Minnewawa Ave"
+        },
+        {
+          "atVertex": 7,
+          "atMeters": 1835,
+          "direction": "left",
+          "onto": "E Adams Ave"
+        },
+        {
+          "atVertex": 9,
+          "atMeters": 2636,
+          "direction": "right",
+          "onto": "S Clovis Ave"
+        },
+        {
+          "atVertex": 10,
+          "atMeters": 3438,
+          "direction": "left",
+          "onto": "E Sumner Ave"
+        },
+        {
+          "atVertex": 11,
+          "atMeters": 4242,
+          "direction": "right",
+          "onto": "S Sunnyside Ave"
+        },
+        {
+          "atVertex": 12,
+          "atMeters": 5038,
+          "direction": "left",
+          "onto": "E South Ave"
+        },
+        {
+          "atVertex": 13,
+          "atMeters": 5439,
+          "direction": "left",
+          "onto": "Stanford Ave"
+        },
+        {
+          "atVertex": 14,
+          "atMeters": 5595,
+          "direction": "right",
+          "onto": "W Fresno St"
+        }
+      ]
+    },
+    {
+      "id": "return",
+      "from": "park",
+      "to": "gurdwara",
+      "startStreet": "Citrus Ave",
+      "lengthMeters": 5700,
+      "coordinates": [
+        [
+          -119.686067,
+          36.621841
+        ],
+        [
+          -119.685595,
+          36.621283
+        ],
+        [
+          -119.685677,
+          36.619955
+        ],
+        [
+          -119.691215,
+          36.619981
+        ],
+        [
+          -119.691204,
+          36.627093
+        ],
+        [
+          -119.700098,
+          36.627212
+        ],
+        [
+          -119.700088,
+          36.634322
+        ],
+        [
+          -119.708969,
+          36.63439
+        ],
+        [
+          -119.708949,
+          36.647772
+        ],
+        [
+          -119.709162,
+          36.648539
+        ],
+        [
+          -119.710107,
+          36.648974
+        ],
+        [
+          -119.711702,
+          36.649006
+        ]
+      ],
+      "segmentStreets": [
+        "Citrus Ave",
+        "Citrus Ave",
+        "E South Ave",
+        "S Sunnyside Ave",
+        "E Sumner Ave",
+        "S Clovis Ave",
+        "E Adams Ave",
+        "S Minnewawa Ave",
+        "S Minnewawa Ave",
+        "E Lincoln Ave",
+        "E Lincoln Ave"
+      ],
+      "turns": [
+        {
+          "atVertex": 2,
+          "atMeters": 223,
+          "direction": "right",
+          "onto": "E South Ave"
+        },
+        {
+          "atVertex": 3,
+          "atMeters": 717,
+          "direction": "right",
+          "onto": "S Sunnyside Ave"
+        },
+        {
+          "atVertex": 4,
+          "atMeters": 1508,
+          "direction": "left",
+          "onto": "E Sumner Ave"
+        },
+        {
+          "atVertex": 5,
+          "atMeters": 2302,
+          "direction": "right",
+          "onto": "S Clovis Ave"
+        },
+        {
+          "atVertex": 6,
+          "atMeters": 3092,
+          "direction": "left",
+          "onto": "E Adams Ave"
+        },
+        {
+          "atVertex": 7,
+          "atMeters": 3885,
+          "direction": "right",
+          "onto": "S Minnewawa Ave"
+        },
+        {
+          "atVertex": 9,
+          "atMeters": 5460,
+          "direction": "left",
+          "onto": "E Lincoln Ave"
+        }
+      ]
+    }
+  ]
+}

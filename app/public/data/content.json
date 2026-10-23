@@ -23,7 +23,9 @@
     },
     "park": {
       "name": "Donny Wright Park",
-      "address": "546–638 W Fresno St, Fowler, CA 93625"
+      "address": "546–638 W Fresno St, Fowler, CA 93625",
+      "lat": 36.621933,
+      "lng": -119.685953
     }
   },
   "schedule": [
