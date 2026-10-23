@@ -11,7 +11,7 @@ export interface StageDomain {
 export const domains: Record<"dev" | "prod", StageDomain | null> = {
   dev: {
     domainName: "ggnp.gurdevs.com",
-    certificateArn: null,
+    certificateArn: "arn:aws:acm:us-east-1:643594672445:certificate/08d73cd0-62b3-48b9-afcd-64f7e8faf79a",
   },
   prod: null,
 };
