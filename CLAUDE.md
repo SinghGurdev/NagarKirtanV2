@@ -8,6 +8,6 @@
 - Plain JavaScript + Vite, no framework. Keep it that way unless the owner asks.
 - Hosting: S3 + CloudFront via CDK in `infra/`, region us-west-2. Stage settings in `infra/lib/config.ts`.
 - Deploys only through GitHub Actions (OIDC role, no keys). Pushing to `main` deploys DEV only. Never trigger the production workflow; the owner does that. Verify changes on the dev site, then tell the owner they are ready for production.
-- Planned live data: visitors poll `live.json` (cached a few seconds by CloudFront); the lead phone and admins write through a small API (API Gateway + Lambda), guarded by passcodes in SSM. Keep secrets out of the repo; it is public.
+- Live data: the lead phone opens the hidden page `#/lead`, signs in with a passcode (Secrets Manager secret `<stack>/lead-passcode`) and POSTs its GPS to a Lambda function URL (`infra/lambda/live`), which writes `live/state.json` to the bucket. Visitors poll that file every 5 s. `config/api.json` tells the app the endpoint URL. Logic is in `compute.mjs`; test with `node tools/test-live.mjs`. Keep secrets out of the repo; it is public.
 - Commit and push small, working steps; check `npm run build` and `npm run synth` before pushing.
 - The owner edits `app/public/data/content.json` directly on GitHub. Always `git fetch` and rebase onto `origin/main` before pushing, keep their wording, and never hide `git push` errors.

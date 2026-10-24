@@ -7,10 +7,13 @@ import { schedule } from "./tabs/schedule.js";
 import { live } from "./tabs/live.js";
 import { parking } from "./tabs/parking.js";
 import { grounds } from "./tabs/grounds.js";
+import { lead } from "./tabs/lead.js";
 
 // Tab order matches the bottom tab bar in the designs.
 const tabs = [home, schedule, live, parking, grounds];
-const byId = Object.fromEntries(tabs.map((t) => [t.id, t]));
+// Pages reached only by link (not in the tab bar).
+const hiddenPages = [lead];
+const byId = Object.fromEntries([...tabs, ...hiddenPages].map((t) => [t.id, t]));
 
 // The dev site (built with VITE_STAGE=dev) says so, so nobody mistakes it
 // for the real one.
@@ -44,7 +47,7 @@ renderTabbar();
 function currentTab() {
   const id = location.hash.replace(/^#\/?/, "");
   const tab = byId[id];
-  return tab && visible().includes(tab) ? tab : home;
+  return tab && (visible().includes(tab) || hiddenPages.includes(tab)) ? tab : home;
 }
 
 function show() {

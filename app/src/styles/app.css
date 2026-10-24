@@ -852,10 +852,126 @@ h3 {
 .map-hero--tall {
   height: min(58vh, 480px);
 }
-.status-card {
+/* Below .status-card: the head (LIVE + Updated) and the street / turn row. */
+.status-head {
   display: flex;
-  gap: 12px;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.status-updated {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-2);
+}
+.status-updated--stale {
+  color: var(--kesri-text);
+}
+.badge-live--paused {
+  background: var(--surface-2);
+  color: var(--text-2);
+}
+.badge-live--paused::before {
+  background: var(--text-3);
+}
+.badge-live--small {
+  font-size: 11px;
+  padding: 3px 8px;
+  margin-right: 4px;
+  vertical-align: 1px;
+}
+.status-row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.status-icon {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-tint);
+  color: var(--primary-tint-text);
+}
+.status-icon--idle {
+  background: var(--surface-2);
+  color: var(--text-2);
+}
+.status-icon--live {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.status-icon--paused {
+  background: var(--surface-2);
+  color: var(--text-2);
+}
+.status-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.status-title--big {
+  font-size: 24px;
+}
+.map-btn--second {
+  top: calc(64px + env(safe-area-inset-top));
+}
+
+/* The front of the Nagar Kirtan on the map */
+.lead-dot {
+  display: block;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--kesri);
+  border: 3px solid #fff;
+  box-shadow: 0 0 0 0 rgba(242, 145, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.3);
+  animation: lead-pulse 2s ease-out infinite;
+}
+.map-pin--lead {
+  z-index: 5;
+}
+.map-pin--lead-paused .lead-dot {
+  background: var(--text-3);
+  animation: none;
+}
+@keyframes lead-pulse {
+  to {
+    box-shadow: 0 0 0 18px rgba(242, 145, 0, 0), 0 2px 6px rgba(0, 0, 0, 0.3);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lead-dot {
+    animation: none;
+  }
+}
+
+/* Schedule live times */
+.sched-live {
+  margin-top: 4px;
+}
+.ev-new {
+  display: block;
+  color: var(--kesri-text);
+}
+.ev-was {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-3);
+  text-align: right;
+}
+.ev-end--done {
+  color: var(--primary);
+}
+.ev--done .ev-title {
+  color: var(--text-2);
 }
 .status-dot {
   flex: none;
@@ -995,4 +1111,241 @@ h3 {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   pointer-events: none;
   white-space: nowrap;
+}
+
+/* Buttons used on the Lead device page */
+.btn-kesri,
+.btn-secondary,
+.btn-dark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 54px;
+  border-radius: var(--radius-control);
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 800;
+  cursor: pointer;
+  border: 0;
+}
+.btn-kesri {
+  background: var(--kesri);
+  color: #14247a;
+}
+.btn-secondary {
+  background: var(--surface);
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+.btn-dark {
+  background: var(--text);
+  color: var(--bg);
+}
+.btn-link {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--primary);
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+.btn-kesri:focus-visible,
+.btn-secondary:focus-visible,
+.btn-dark:focus-visible,
+.btn-link:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Lead device page */
+.lead-form {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+.lead-form label {
+  font-weight: 700;
+}
+.lead-form input {
+  min-height: 50px;
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 20px;
+  letter-spacing: 0.08em;
+}
+.lead-form input:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 1px;
+}
+.lead-form .btn-primary {
+  border: 0;
+  width: 100%;
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+.form-error,
+.lead-error {
+  margin: 0;
+  color: var(--amenity-aid);
+  font-weight: 600;
+  font-size: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  .form-error,
+  .lead-error {
+    color: #ff8a80;
+  }
+}
+.lead-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 10px;
+  padding: 26px 18px 24px;
+  border-radius: 24px;
+  background: linear-gradient(180deg, #1e3a9c 0%, #14247a 100%);
+  color: #fff;
+  border-bottom: 5px solid var(--kesri);
+}
+.lead-ring {
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lead-core {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.lead-hero--sharing .lead-core {
+  background: var(--kesri);
+  color: #14247a;
+  box-shadow: 0 0 0 10px rgba(242, 145, 0, 0.3);
+  animation: lead-pulse 2s ease-in-out infinite;
+}
+@keyframes lead-pulse {
+  50% {
+    box-shadow: 0 0 0 16px rgba(242, 145, 0, 0.12);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lead-hero--sharing .lead-core {
+    animation: none;
+  }
+}
+.lead-title {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.lead-sub {
+  font-size: 14px;
+  color: #d3dcff;
+  max-width: 300px;
+}
+.lead-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+.lead-stat {
+  background: var(--surface);
+  border-radius: 14px;
+  padding: 10px 12px;
+  box-shadow: var(--shadow-card);
+}
+.lead-stat span {
+  display: block;
+  font-size: 12px;
+  color: var(--text-2);
+}
+.lead-stat strong {
+  display: block;
+  font-size: 17px;
+  margin-top: 2px;
+}
+.lead-error {
+  margin-top: 10px;
+}
+.lead-now {
+  margin-top: 12px;
+}
+.lead-now-text {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-top: 4px;
+}
+.lead-phase {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 14px;
+}
+.lead-phase button {
+  min-height: 44px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.lead-phase button[aria-checked="true"] {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+.lead-hint {
+  font-size: 12px;
+  color: var(--text-2);
+  margin: 8px 0 0;
+}
+.lead-actions {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+.lead-warn {
+  margin: 14px 4px 0;
+  padding: 12px 14px;
+  border-radius: var(--radius-control);
+  background: var(--kesri-tint);
+  color: var(--kesri-text);
+  font-size: 14px;
+  font-weight: 600;
+}
+.lead-more {
+  margin-top: 12px;
+}
+.lead-more summary {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  cursor: pointer;
 }

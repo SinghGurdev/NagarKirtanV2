@@ -163,7 +163,9 @@ export function apply(prev, input, { route, content, now }) {
       s.updatedAt = stamp;
       return s;
     case "resume":
-      if (s.status === "paused") s.status = "live";
+      // Also undoes an accidental "end" (arrival time is cleared).
+      if (s.status === "ended") delete s.actual["arrive-gurdwara"];
+      if (s.status === "paused" || s.status === "ended") s.status = "live";
       s.updatedAt = stamp;
       return s;
     case "end":
