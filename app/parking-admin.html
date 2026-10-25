@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#1E3A9C" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0B1233" media="(prefers-color-scheme: dark)" />
+    <meta name="robots" content="noindex" />
+    <title>Parking Admin · Nagar Kirtan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@600;700;800&family=Figtree:wght@400;500;600;700&display=swap"
+    />
+  </head>
+  <body>
+    <main class="pk" id="app">
+      <header class="pk-head">
+        <div>
+          <h1>Parking Admin</h1>
+          <div class="pk-sub">Nagar Kirtan 2026 · Sevadar parking passes</div>
+        </div>
+        <button class="btn btn-sm" type="button" id="lock" hidden style="color: var(--text)">Lock</button>
+      </header>
+
+      <form class="card form" id="pinForm">
+        <label class="eyebrow" for="pin" style="margin: 0">Admin PIN</label>
+        <input class="input" id="pin" type="password" inputmode="numeric" autocomplete="current-password" />
+        <button class="btn btn-primary" type="submit">UNLOCK</button>
+        <div class="error" id="pinErr" hidden></div>
+      </form>
+
+      <div id="main" hidden style="display: flex; flex-direction: column; gap: 14px">
+        <div class="stats">
+          <div class="card stat"><span class="eyebrow">Passes</span><span class="big" id="total">—</span></div>
+          <div class="card stat"><span class="eyebrow">Inside now</span><span class="big" id="inside">—</span></div>
+        </div>
+
+        <form class="card form" id="addForm" autocomplete="off">
+          <h2 style="font-size: 22px; color: var(--primary)">Add a parking pass</h2>
+          <div class="two">
+            <div>
+              <label class="eyebrow" for="fId">Pass ID</label>
+              <input class="input" id="fId" inputmode="numeric" required style="font-weight: 700; font-variant-numeric: tabular-nums" />
+            </div>
+            <div>
+              <label class="eyebrow" for="fPlate">License plate</label>
+              <input class="input" id="fPlate" required autocapitalize="characters" style="font-weight: 700; text-transform: uppercase" />
+            </div>
+          </div>
+          <div class="two">
+            <div>
+              <label class="eyebrow" for="fCat">Category</label>
+              <input class="input" id="fCat" list="cats" value="Sevadar" />
+              <datalist id="cats"></datalist>
+            </div>
+            <div>
+              <label class="eyebrow" for="fPhone">Phone number</label>
+              <input class="input" id="fPhone" type="tel" inputmode="tel" />
+            </div>
+          </div>
+          <div>
+            <label class="eyebrow" for="fNotes">Notes (shown to the attendant)</label>
+            <textarea class="input" id="fNotes" rows="2"></textarea>
+          </div>
+          <button class="btn btn-primary" type="submit" id="addBtn">ADD PASS</button>
+          <div class="error" id="addErr" hidden></div>
+          <div id="added" hidden></div>
+        </form>
+
+        <section class="card rows" aria-labelledby="listTitle">
+          <div style="padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; border-bottom: 1px solid var(--divider)">
+            <div style="display: flex; justify-content: space-between; align-items: center">
+              <h2 id="listTitle" style="font-size: 20px">All passes</h2>
+              <button class="btn btn-sm" type="button" id="refresh" style="color: var(--text)">Refresh</button>
+            </div>
+            <label class="eyebrow" for="q" style="margin: 0">Search</label>
+            <input class="input" id="q" type="search" placeholder="Pass ID, plate, phone or category" />
+          </div>
+          <div id="list"><div class="empty">Loading…</div></div>
+        </section>
+      </div>
+    </main>
+    <script type="module" src="/src/parking/admin.js"></script>
+  </body>
+</html>

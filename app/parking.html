@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#1E3A9C" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0B1233" media="(prefers-color-scheme: dark)" />
+    <meta name="robots" content="noindex" />
+    <title>Parking Check · Nagar Kirtan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@600;700;800&family=Figtree:wght@400;500;600;700&display=swap"
+    />
+  </head>
+  <body>
+    <main class="pk" id="scanner">
+      <header class="pk-head">
+        <div>
+          <h1>Parking Check</h1>
+          <div class="pk-sub">Nagar Kirtan 2026 · Sevadar parking · <button class="pk-gate" id="gate" type="button">Gate 1</button></div>
+        </div>
+        <span class="pill" id="net">Connecting…</span>
+      </header>
+
+      <div class="mode" role="group" aria-label="Scan mode">
+        <button type="button" data-mode="entry" aria-pressed="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>ENTRY
+        </button>
+        <button type="button" data-mode="exit" aria-pressed="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>EXIT
+        </button>
+      </div>
+
+      <div class="cam">
+        <video id="video" playsinline muted autoplay></video>
+        <span class="cam-tag" id="camTag">SCANNING FOR ENTRY</span>
+        <div class="cam-frame" aria-hidden="true"></div>
+        <div class="cam-hint">Point the camera at the pass QR code</div>
+        <div class="cam-msg" id="camMsg" hidden>
+          <span id="camMsgText">Camera is off.</span>
+          <button class="btn" type="button" id="camStart">Turn on camera</button>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="card stat"><span class="eyebrow">Inside now</span><span class="big" id="insideCount">—</span></div>
+        <div class="card stat">
+          <span class="eyebrow">Last scan</span><span class="mid" id="lastId">—</span><span class="muted" id="lastWhat">&nbsp;</span>
+        </div>
+      </div>
+
+      <div class="row2">
+        <button class="btn" type="button" id="openType">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2" /><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10" /></svg>Type pass #
+        </button>
+        <button class="btn" type="button" id="openList">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" /></svg>Inside list
+        </button>
+      </div>
+    </main>
+
+    <section class="panel" id="panel" hidden aria-live="polite"></section>
+    <div class="busy" id="busy" hidden><div id="busyText">Checking…</div></div>
+
+    <script type="module" src="/src/parking/scanner.js"></script>
+  </body>
+</html>
