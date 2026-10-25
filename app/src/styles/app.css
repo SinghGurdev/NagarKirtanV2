@@ -919,6 +919,9 @@ h3 {
 .status-title--big {
   font-size: 24px;
 }
+.map-btn[hidden] {
+  display: none;
+}
 .map-btn--second {
   top: calc(64px + env(safe-area-inset-top));
 }
