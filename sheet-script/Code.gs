@@ -12,9 +12,10 @@
  * The pass list is the first tab whose row 1 has a "Pass ID" header. The
  * script uses these headers (any order, case does not matter):
  *   Pass ID, License Plate, Category, Status, Phone Number, Notes,
- *   Check-In Time, Check-Out Time (added if missing)
- * Status is set to "Checked In" or "Checked Out". Every scan is also written
- * to a "Scan Log" tab (created if missing).
+ *   Parking Status, Check-In Time, Check-Out Time (added if missing)
+ * Status is the pass's own status ("Active"); the script never changes it.
+ * Parking Status is set to "Checked In" or "Checked Out". Every scan is also
+ * written to a "Scan Log" tab (created if missing).
  */
 
 var IN = 'Checked In';
@@ -90,7 +91,7 @@ function checkIn_(req) {
     setCell_(t, row, 'check-out time', now);
     log_('Check-out (missed, fixed at gate)', t, row, req.gate);
   }
-  setCell_(t, row, 'status', IN);
+  setCell_(t, row, 'parking status', IN);
   setCell_(t, row, 'check-in time', now);
   setCell_(t, row, 'check-out time', '');
   log_('Check-in', t, row, req.gate);
@@ -105,7 +106,7 @@ function checkOut_(req) {
     return { ok: true, result: 'notInside', pass: passOut_(t, row), insideCount: countInside_(t) };
   }
   var before = snapshot_(t, row);
-  setCell_(t, row, 'status', OUT);
+  setCell_(t, row, 'parking status', OUT);
   setCell_(t, row, 'check-out time', new Date());
   log_('Check-out', t, row, req.gate);
   return { ok: true, result: 'checkedOut', pass: passOut_(t, row), before: before, insideCount: countInside_(t) };
@@ -116,7 +117,7 @@ function undo_(req) {
   var row = findRow_(t, req.passId);
   if (!row || !req.before) return { ok: false, error: 'Nothing to undo' };
   var b = req.before;
-  setCell_(t, row, 'status', b.status || '');
+  setCell_(t, row, 'parking status', b.status || '');
   setCell_(t, row, 'check-in time', b.checkIn ? new Date(b.checkIn) : '');
   setCell_(t, row, 'check-out time', b.checkOut ? new Date(b.checkOut) : '');
   log_('Undo', t, row, req.gate);
@@ -161,6 +162,7 @@ function adminAdd_(req) {
     if (k === 'category') return String(p.category || '').trim();
     if (k === 'phone number') return String(p.phone || '').trim();
     if (k === 'notes') return String(p.notes || '').trim();
+    if (k === 'status') return 'Active';
     return '';
   });
   t.sheet.appendRow(values);
@@ -190,7 +192,7 @@ function table_() {
 
   var lastCol2 = sheet.getLastColumn();
   var headers = sheet.getRange(1, 1, 1, lastCol2).getValues()[0].map(function (h) { return String(h).trim(); });
-  ['Status', 'Check-In Time', 'Check-Out Time'].forEach(function (name) {
+  ['Parking Status', 'Check-In Time', 'Check-Out Time'].forEach(function (name) {
     var has = headers.some(function (h) { return h.toLowerCase() === name.toLowerCase(); });
     if (!has) {
       headers.push(name);
@@ -232,7 +234,7 @@ function setCell_(t, row, key, value) {
 }
 
 function isInside_(t, row) {
-  return String(get_(t, row, 'status')).trim().toLowerCase() === IN.toLowerCase();
+  return String(get_(t, row, 'parking status')).trim().toLowerCase() === IN.toLowerCase();
 }
 
 function countInside_(t) {
@@ -247,7 +249,7 @@ function iso_(v) {
 
 function snapshot_(t, row) {
   return {
-    status: String(get_(t, row, 'status') || ''),
+    status: String(get_(t, row, 'parking status') || ''),
     checkIn: iso_(get_(t, row, 'check-in time')),
     checkOut: iso_(get_(t, row, 'check-out time')),
   };
@@ -259,7 +261,7 @@ function passOut_(t, row) {
     plate: String(get_(t, row, 'license plate') || '').trim().toUpperCase(),
     category: String(get_(t, row, 'category') || ''),
     notes: String(get_(t, row, 'notes') || ''),
-    status: String(get_(t, row, 'status') || ''),
+    status: String(get_(t, row, 'parking status') || ''),
     inside: isInside_(t, row),
     checkIn: iso_(get_(t, row, 'check-in time')),
     checkOut: iso_(get_(t, row, 'check-out time')),
