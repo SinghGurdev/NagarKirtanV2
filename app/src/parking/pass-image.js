@@ -1,200 +1,110 @@
-// Draws a sevadar parking pass (the same look as the printed/sent passes:
-// navy with gold lettering, plate, QR and pass number) to a PNG for sharing.
+// Builds a parking pass image for sharing. The background is the committee's
+// own pass design (pass-template.jpg) with the plate number, QR code and
+// pass number cleared; this file writes those three in for each pass. For a
+// category other than Sevadar, pass-template-nocat.jpg (no "SEVADAR" line)
+// is used and the category is written in.
 import QRCode from "qrcode";
+import templateUrl from "./pass-template.jpg";
+import templateNoCatUrl from "./pass-template-nocat.jpg";
 
 const W = 1024;
 const H = 1536;
-const NAVY = "#0b1233"; // tokens: dark --bg
-const NAVY_2 = "#14247a"; // --primary-deep
-const GOLD = "#ffc21a"; // --gold
-const KESRI = "#f29100"; // --kesri
-const CREAM = "#fff6ea"; // --bg
-const INK = "#161b33"; // --text
-const MAROON = "#7a1418"; // --maroon
 
-const DISPLAY = '"Baloo Paaji 2", "Figtree", sans-serif';
-const BODY = '"Figtree", sans-serif';
+// Positions measured on the original 1024 x 1536 pass.
+const PLATE = { cx: 360, baseline: 1305, maxWidth: 400, size: 136, color: "#090d18" };
+const QR = { x: 718, y: 1080, size: 160 };
+const PASS_NO = { cx: 797, baseline: 1311, size: 42, color: "rgb(250, 212, 150)" };
+const CATEGORY = { cx: 516, baseline: 940, maxWidth: 740, size: 96 };
 
-const EVENT = {
-  place: "GURUDWARA GUR NANAK PARKASH",
-  city: "FRESNO, CA",
-  title: ["NAGAR", "KIRTAN", "2026"],
-  date: "OCTOBER 25, 2026",
-};
-
-function goldFill(ctx, y0, y1) {
-  const g = ctx.createLinearGradient(0, y0, 0, y1);
-  g.addColorStop(0, "#ffd75a");
-  g.addColorStop(0.55, GOLD);
-  g.addColorStop(1, KESRI);
-  return g;
-}
-
-function fitFont(ctx, text, weight, family, maxSize, maxWidth) {
-  let size = maxSize;
-  do {
-    ctx.font = `${weight} ${size}px ${family}`;
-    if (ctx.measureText(text).width <= maxWidth) break;
-    size -= 2;
-  } while (size > 20);
-  return size;
-}
-
-function roundRect(ctx, x, y, w, h, r) {
-  ctx.beginPath();
-  ctx.moveTo(x + r, y);
-  ctx.arcTo(x + w, y, x + w, y + h, r);
-  ctx.arcTo(x + w, y + h, x, y + h, r);
-  ctx.arcTo(x, y + h, x, y, r);
-  ctx.arcTo(x, y, x + w, y, r);
-  ctx.closePath();
-}
-
-function diamond(ctx, x, y, s, color) {
-  ctx.save();
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.moveTo(x, y - s);
-  ctx.lineTo(x + s, y);
-  ctx.lineTo(x, y + s);
-  ctx.lineTo(x - s, y);
-  ctx.closePath();
-  ctx.fill();
-  ctx.restore();
+const images = new Map();
+function loadImage(src) {
+  if (!images.has(src)) {
+    images.set(
+      src,
+      new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error("Couldn't load the pass template."));
+        img.src = src;
+      }),
+    );
+  }
+  return images.get(src);
 }
 
 async function fontsReady() {
   try {
     await Promise.all([
-      document.fonts.load(`800 120px ${DISPLAY}`),
-      document.fonts.load(`700 40px ${DISPLAY}`),
-      document.fonts.load(`700 40px ${BODY}`),
+      document.fonts.load('700 136px "Oswald"'),
+      document.fonts.load('800 42px "Montserrat"'),
+      document.fonts.load('900 96px "Merriweather"'),
     ]);
   } catch {
-    /* fall back to system fonts */
+    /* system fonts as a fallback */
   }
+}
+
+/** Draws text centred on cx, squeezed sideways (not shrunk) if too wide. */
+function fitText(ctx, text, cx, baseline, maxWidth) {
+  const w = ctx.measureText(text).width;
+  const sx = w > maxWidth ? maxWidth / w : 1;
+  ctx.save();
+  ctx.translate(cx, baseline);
+  ctx.scale(sx, 1);
+  ctx.fillText(text, 0, 0);
+  ctx.restore();
 }
 
 /** Returns a canvas with the pass drawn on it. */
 export async function drawPass({ id, plate, category }) {
-  await fontsReady();
+  const cat = String(category || "").trim();
+  const isSevadar = cat.toLowerCase() === "sevadar";
+  const [bg] = await Promise.all([loadImage(isSevadar ? templateUrl : templateNoCatUrl), fontsReady()]);
+
   const c = document.createElement("canvas");
   c.width = W;
   c.height = H;
   const ctx = c.getContext("2d");
+  ctx.drawImage(bg, 0, 0, W, H);
   ctx.textAlign = "center";
   ctx.textBaseline = "alphabetic";
 
-  // Ground with a soft blue glow in the middle.
-  ctx.fillStyle = NAVY;
-  ctx.fillRect(0, 0, W, H);
-  const glow = ctx.createRadialGradient(W / 2, 520, 40, W / 2, 520, 700);
-  glow.addColorStop(0, "rgba(30, 58, 156, 0.55)");
-  glow.addColorStop(1, "rgba(11, 18, 51, 0)");
-  ctx.fillStyle = glow;
-  ctx.fillRect(0, 0, W, H);
+  // Plate number, in the condensed plate lettering.
+  ctx.fillStyle = PLATE.color;
+  ctx.font = `700 ${PLATE.size}px "Oswald", "Arial Narrow", sans-serif`;
+  fitText(ctx, String(plate || "").toUpperCase(), PLATE.cx, PLATE.baseline, PLATE.maxWidth);
 
-  // Double gold frame with corner diamonds.
-  ctx.strokeStyle = KESRI;
-  ctx.lineWidth = 6;
-  ctx.strokeRect(22, 22, W - 44, H - 44);
-  ctx.lineWidth = 2;
-  ctx.strokeRect(40, 40, W - 80, H - 80);
-  for (const [x, y] of [[40, 40], [W - 40, 40], [40, H - 40], [W - 40, H - 40]]) diamond(ctx, x, y, 16, GOLD);
-
-  // Gurdwara name.
-  ctx.fillStyle = GOLD;
-  fitFont(ctx, EVENT.place, 800, DISPLAY, 56, W - 160);
-  ctx.fillText(EVENT.place, W / 2, 140);
-  ctx.font = `800 46px ${DISPLAY}`;
-  ctx.fillText(EVENT.city, W / 2, 196);
-
-  // Title cartouche.
-  roundRect(ctx, 110, 240, W - 220, 420, 90);
-  ctx.fillStyle = NAVY_2;
-  ctx.fill();
-  ctx.lineWidth = 4;
-  ctx.strokeStyle = KESRI;
-  ctx.stroke();
-  ctx.fillStyle = goldFill(ctx, 270, 640);
-  ctx.font = `800 132px ${DISPLAY}`;
-  ctx.fillText(EVENT.title[0], W / 2, 380);
-  ctx.fillText(EVENT.title[1], W / 2, 500);
-  ctx.font = `800 120px ${DISPLAY}`;
-  ctx.fillText(EVENT.title[2], W / 2, 618);
-
-  // Date pill.
-  roundRect(ctx, 170, 720, W - 340, 96, 48);
-  ctx.fillStyle = goldFill(ctx, 720, 816);
-  ctx.fill();
-  ctx.fillStyle = INK;
-  ctx.font = `800 54px ${DISPLAY}`;
-  ctx.fillText(EVENT.date, W / 2, 788);
-  diamond(ctx, 222, 768, 10, INK);
-  diamond(ctx, W - 222, 768, 10, INK);
-
-  // "<CATEGORY> PARKING PASS"
-  const cat = String(category || "").trim().toUpperCase();
-  ctx.fillStyle = goldFill(ctx, 860, 1060);
-  if (cat) {
-    fitFont(ctx, cat, 800, DISPLAY, 104, W - 160);
-    ctx.fillText(cat, W / 2, 940);
-  }
-  fitFont(ctx, "PARKING PASS", 800, DISPLAY, 104, W - 160);
-  ctx.fillText("PARKING PASS", W / 2, cat ? 1048 : 990);
-
-  // Plate (left) and QR (right).
-  const plateX = 90;
-  const plateY = 1130;
-  const plateW = 520;
-  const plateH = 250;
-  roundRect(ctx, plateX, plateY, plateW, plateH, 26);
-  ctx.fillStyle = goldFill(ctx, plateY, plateY + plateH);
-  ctx.fill();
-  roundRect(ctx, plateX + 12, plateY + 12, plateW - 24, plateH - 24, 18);
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = "rgba(22, 27, 51, 0.35)";
-  ctx.stroke();
-  ctx.fillStyle = MAROON;
-  ctx.font = `700 40px ${BODY}`;
-  ctx.fillText("CALIFORNIA", plateX + plateW / 2, plateY + 72);
-  ctx.fillStyle = INK;
-  const plateText = String(plate || "").toUpperCase();
-  fitFont(ctx, plateText, 800, BODY, 132, plateW - 60);
-  ctx.fillText(plateText, plateX + plateW / 2, plateY + 205);
-
-  const qrSize = 250;
-  const qrX = W - 90 - qrSize;
-  const qrY = 1110;
-  ctx.fillStyle = CREAM;
-  roundRect(ctx, qrX - 12, qrY - 12, qrSize + 24, qrSize + 24, 10);
-  ctx.fill();
+  // QR code (holds just the Pass ID) in the white box.
   const qr = document.createElement("canvas");
-  await QRCode.toCanvas(qr, String(id), { width: qrSize, margin: 1, errorCorrectionLevel: "M", color: { dark: "#000000", light: "#ffffff" } });
-  ctx.drawImage(qr, qrX, qrY, qrSize, qrSize);
+  await QRCode.toCanvas(qr, String(id), { width: QR.size, margin: 0, errorCorrectionLevel: "M" });
+  ctx.imageSmoothingEnabled = false;
+  ctx.drawImage(qr, QR.x, QR.y, QR.size, QR.size);
+  ctx.imageSmoothingEnabled = true;
 
-  ctx.fillStyle = GOLD;
-  ctx.font = `700 44px ${BODY}`;
-  ctx.fillText(`PASS #${id}`, qrX + qrSize / 2, qrY + qrSize + 70);
+  // Pass number under the QR code.
+  ctx.fillStyle = PASS_NO.color;
+  ctx.font = `800 ${PASS_NO.size}px "Montserrat", "Figtree", sans-serif`;
+  fitText(ctx, `PASS #${id}`, PASS_NO.cx, PASS_NO.baseline, 280);
 
-  // Bottom rule with a diamond.
-  ctx.strokeStyle = KESRI;
-  ctx.lineWidth = 3;
-  ctx.beginPath();
-  ctx.moveTo(W / 2 - 300, H - 90);
-  ctx.lineTo(W / 2 - 30, H - 90);
-  ctx.moveTo(W / 2 + 30, H - 90);
-  ctx.lineTo(W / 2 + 300, H - 90);
-  ctx.stroke();
-  diamond(ctx, W / 2, H - 90, 14, GOLD);
-
+  // Category line (the template already says SEVADAR).
+  if (!isSevadar && cat) {
+    const g = ctx.createLinearGradient(0, CATEGORY.baseline - 75, 0, CATEGORY.baseline);
+    g.addColorStop(0, "#ffb347");
+    g.addColorStop(1, "#f29100");
+    ctx.fillStyle = g;
+    ctx.shadowColor = "rgba(0, 0, 0, 0.45)";
+    ctx.shadowOffsetY = 3;
+    ctx.shadowBlur = 4;
+    ctx.font = `900 ${CATEGORY.size}px "Merriweather", Georgia, serif`;
+    fitText(ctx, cat.toUpperCase(), CATEGORY.cx, CATEGORY.baseline, CATEGORY.maxWidth);
+  }
   return c;
 }
 
-/** Draws the pass and returns { file, url } (PNG File + object URL). */
+/** Draws the pass and returns { file, url } (JPEG File + object URL). */
 export async function passFile(pass) {
   const canvas = await drawPass(pass);
-  const blob = await new Promise((res) => canvas.toBlob(res, "image/png"));
-  const file = new File([blob], `parking-pass-${pass.id}.png`, { type: "image/png" });
+  const blob = await new Promise((res) => canvas.toBlob(res, "image/jpeg", 0.92));
+  const file = new File([blob], `parking-pass-${pass.id}.jpg`, { type: "image/jpeg" });
   return { file, url: URL.createObjectURL(blob) };
 }

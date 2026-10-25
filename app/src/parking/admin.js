@@ -70,8 +70,7 @@ async function load() {
     passes = r.passes;
     $("total").textContent = String(passes.length);
     $("inside").textContent = String(r.insideCount);
-    const cats = [...new Set(passes.map((p) => p.category).filter(Boolean))];
-    $("cats").innerHTML = cats.map((c) => `<option value="${esc(c)}"></option>`).join("");
+    fillCategories();
     suggestId();
     draw();
   } catch (err) {
@@ -79,10 +78,36 @@ async function load() {
   }
 }
 
-function suggestId() {
-  if ($("fId").value) return;
+// Category is a real dropdown (phones ignore <datalist>): the categories
+// already in the Sheet, Sevadar first, plus "Other…" for a new one.
+function fillCategories() {
+  const sel = $("fCat");
+  const keep = sel.value;
+  const seen = new Map();
+  for (const p of passes) {
+    const c = String(p.category || "").trim();
+    if (c && !seen.has(c.toLowerCase())) seen.set(c.toLowerCase(), c);
+  }
+  if (!seen.has("sevadar")) seen.set("sevadar", "Sevadar");
+  const cats = [...seen.values()].sort((a, b) => (a.toLowerCase() === "sevadar" ? -1 : b.toLowerCase() === "sevadar" ? 1 : a.localeCompare(b)));
+  sel.innerHTML = cats.map((c) => `<option value="${esc(c)}">${esc(c)}</option>`).join("") + '<option value="__other">Other…</option>';
+  sel.value = keep && [...sel.options].some((o) => o.value === keep) ? keep : cats[0];
+  $("fCatOtherWrap").hidden = sel.value !== "__other";
+}
+$("fCat").addEventListener("change", () => {
+  const other = $("fCat").value === "__other";
+  $("fCatOtherWrap").hidden = !other;
+  if (other) $("fCatOther").focus();
+});
+function categoryValue() {
+  return $("fCat").value === "__other" ? $("fCatOther").value.trim() : $("fCat").value;
+}
+
+// Fill in the next Pass ID (highest number in the Sheet + 1); still editable.
+function suggestId(force) {
+  if ($("fId").value && !force) return;
   const nums = passes.map((p) => Number(p.id)).filter((n) => Number.isFinite(n) && n > 0);
-  if (nums.length) $("fId").placeholder = `Next: ${Math.max(...nums) + 1}`;
+  $("fId").value = nums.length ? String(Math.max(...nums) + 1) : "";
 }
 
 function statusChip(p) {
@@ -170,7 +195,7 @@ $("addForm").addEventListener("submit", async (e) => {
   const pass = {
     id: normId($("fId").value),
     plate: $("fPlate").value.trim().toUpperCase().replace(/\s+/g, ""),
-    category: $("fCat").value.trim(),
+    category: categoryValue(),
     phone: $("fPhone").value.trim(),
     notes: $("fNotes").value.trim(),
   };

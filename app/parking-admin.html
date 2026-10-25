@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@600;700;800&family=Figtree:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Baloo+Paaji+2:wght@600;700;800&family=Figtree:wght@400;500;600;700&family=Merriweather:wght@900&family=Montserrat:wght@800&family=Oswald:wght@700&display=swap"
     />
   </head>
   <body>
@@ -52,13 +52,16 @@
           <div class="two">
             <div>
               <label class="eyebrow" for="fCat">Category</label>
-              <input class="input" id="fCat" list="cats" value="Sevadar" />
-              <datalist id="cats"></datalist>
+              <select class="input" id="fCat"><option value="Sevadar">Sevadar</option><option value="__other">Other…</option></select>
             </div>
             <div>
               <label class="eyebrow" for="fPhone">Phone number</label>
               <input class="input" id="fPhone" type="tel" inputmode="tel" />
             </div>
+          </div>
+          <div id="fCatOtherWrap" hidden>
+            <label class="eyebrow" for="fCatOther">New category name</label>
+            <input class="input" id="fCatOther" autocomplete="off" />
           </div>
           <div>
             <label class="eyebrow" for="fNotes">Notes (shown to the attendant)</label>
