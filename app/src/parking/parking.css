@@ -688,3 +688,22 @@ label.eyebrow {
   padding: 12px 14px;
   font-weight: 600;
 }
+
+.pass-out {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+.pass-out img {
+  width: 100%;
+  max-width: 320px;
+  justify-self: center;
+  border-radius: 10px;
+  box-shadow: var(--shadow-card);
+}
+.pass-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

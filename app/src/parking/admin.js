@@ -3,7 +3,7 @@
 // and download the QR code for a new pass.
 import "../styles/tokens.css";
 import "./parking.css";
-import QRCode from "qrcode";
+import { passFile } from "./pass-image.js";
 import { call, esc, normId, fmtTime, devRibbon } from "./api.js";
 
 devRibbon();
@@ -106,7 +106,7 @@ function draw() {
             </div>
             <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px">
               ${statusChip(p)}
-              <button class="btn-link" type="button" data-qr="${esc(p.id)}" style="min-height:32px; font-size:13px">QR code</button>
+              <button class="btn-link" type="button" data-qr="${esc(p.id)}" style="min-height:32px; font-size:13px">Pass</button>
             </div>
           </div>`,
         )
@@ -123,21 +123,43 @@ $("list").addEventListener("click", (e) => {
   if (p) showAdded(p, false);
 });
 
+let lastUrl = "";
+
+function shareText(p) {
+  return `Nagar Kirtan 2026 ${p.category ? p.category.toLowerCase() + " " : ""}parking pass #${p.id} (plate ${p.plate}). Please show this pass at the parking entrance.`;
+}
+
 async function showAdded(p, isNew) {
-  const url = await QRCode.toDataURL(p.id, { width: 600, margin: 2, errorCorrectionLevel: "M" });
   const box = $("added");
+  box.innerHTML = '<p class="muted">Making the pass…</p>';
+  box.hidden = false;
+  // Made before the tap so the share sheet opens straight away (phones only
+  // allow sharing directly from a tap).
+  const { file, url } = await passFile(p);
+  if (lastUrl) URL.revokeObjectURL(lastUrl);
+  lastUrl = url;
+  const canShare = !!(navigator.canShare && navigator.canShare({ files: [file] }));
   box.innerHTML = `<div class="${isNew ? "ok-msg" : ""}" style="${isNew ? "" : "border-top:1px solid var(--divider); padding-top:12px"}">
-      ${isNew ? `Pass ${esc(p.id)} added to the Sheet.` : `<span class="eyebrow">QR code for pass ${esc(p.id)}</span>`}
+      ${isNew ? `Pass ${esc(p.id)} added to the Sheet.` : `<span class="eyebrow">Parking pass ${esc(p.id)}</span>`}
     </div>
-    <div class="qr-out" style="margin-top:12px">
-      <img src="${url}" alt="QR code for pass ${esc(p.id)}" />
-      <div style="display:flex; flex-direction:column; gap:8px">
-        <div class="serial">${esc(p.id)}</div>
-        <div class="muted">Plate ${esc(p.plate)}${p.category ? " · " + esc(p.category) : ""}</div>
-        <a class="btn" href="${url}" download="pass-${esc(p.id)}-qr.png">Download QR</a>
+    <div class="pass-out">
+      <img src="${url}" alt="Parking pass ${esc(p.id)} for plate ${esc(p.plate)}" />
+      <div class="pass-actions">
+        ${canShare ? `<button class="btn btn-primary" type="button" id="sharePass"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v13"/></svg>SHARE PASS</button>` : ""}
+        <a class="btn" href="${url}" download="${esc(file.name)}">Download pass</a>
+        ${canShare ? "" : '<p class="muted" style="margin:0">Sharing works from a phone. On a computer, download the pass and send it.</p>'}
       </div>
     </div>`;
-  box.hidden = false;
+  const btn = $("sharePass");
+  if (btn) {
+    btn.addEventListener("click", async () => {
+      try {
+        await navigator.share({ files: [file], title: `Parking pass ${p.id}`, text: shareText(p) });
+      } catch (err) {
+        if (err && err.name !== "AbortError") showErr($("addErr"), "Couldn't open sharing. Use Download pass instead.");
+      }
+    });
+  }
   box.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
